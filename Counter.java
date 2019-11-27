@@ -30,7 +30,8 @@ public class Counter {
 
     public static void main(String[] args) throws IOException {
 
-        String filename = "gettysburgaddress";
+        String filename = "beowulf";
+        int totalWords = 0;
 
         // Read the file
         File file = new File(filename);
@@ -41,16 +42,18 @@ public class Counter {
         while (reader.hasNextLine()) {
             String currentLine = reader.nextLine();
             // Split lines by non characters
-            String[] words = currentLine.split("[^a-zA-Z]+");
+            String[] words = currentLine.split("('s)|[^A-Za-zÀ-ÿ]+");
             // Add word to list if it's not there
             for (String word : words) {
                 String lWord = word.toLowerCase();
                 if (!list.containsKey(lWord)) {
                     if (lWord.length() > 0) {
                         list.put(lWord, 1);
+                        totalWords++;
                     }
                 // Increment number of words
                 } else {
+                    totalWords++;
                     list.replace(lWord, list.get(lWord) + 1);
                 }
             }
@@ -62,9 +65,14 @@ public class Counter {
         List<Map.Entry<String, Integer>> sortedList = new ArrayList<Map.Entry<String, Integer>>(list.entrySet());
         sortedList.sort(mapComp);
 
-
-
+        // Create the file to write to
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename + "results"));
+
+        // Print total number of words & unique words
+        writer.write("Total # of words = " + totalWords);
+        writer.newLine();
+        writer.write("Total # of unique words = " + sortedList.size());
+        writer.newLine();
 
         // Print results to file
         for (Map.Entry<String, Integer> word: sortedList) {
