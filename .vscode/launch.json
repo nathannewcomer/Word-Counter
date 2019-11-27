@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Counter",
+            "request": "launch",
+            "mainClass": "Counter",
+            "projectName": "Word Counter_48bba18b"
+        }
+    ]
+}
